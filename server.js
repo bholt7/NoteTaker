@@ -3,6 +3,8 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const dataBase = require('./db/db.json');
+const res = require('express/lib/response');
+const { json } = require('express/lib/response');
 
 // invoking express app
 const app = express();
@@ -13,23 +15,15 @@ app.use(express.static('public'));
 
 // setting up json data parsing
 app.use(express.urlencoded({extended: true}));
-app.use(express.json);
+app.use(express.json());
 
-// grabbing the index.html so that it loads on page load
-app.get('/', (req, res)=> res.sendFile(path.join(__dirname,'/public/index.html')));
-
-// grabbing notes html so that it will appear when "get started" is clicked
-app.get('/notes', (req, res)=> res.sendFile(path.join(__dirname, '/public/notes.html')));
-
-// endpoints
-
-app.route('/api/notes').get((req,res)=> res.json(dataBase))
+app.route('/api/notes').get((req,res)=> res.json(dataBase));
 
 // adding notes to the json file
-.post((req, res)=> {
+app.route('/api/notes').post((req, res)=> {
     let fp = path.join('/db/db.json')
     let createNote = req.body;
-
+    let id = Math.floor(Math.random() * 99);
     let highid = 99;
 
     for (let i = 0; i < dataBase.length; i++) {
@@ -40,7 +34,7 @@ app.route('/api/notes').get((req,res)=> res.json(dataBase))
         }
     }
 
-    createNote.id =id + 1;
+    createNote.id = id + 1;
     dataBase.push(createNote);
 
     fs.writeFile(fp, JSON.stringify(dataBase), (err)=> {
@@ -50,6 +44,29 @@ app.route('/api/notes').get((req,res)=> res.json(dataBase))
 
 res.json(createNote)
 });
+
+app.route('/api/notes/:id').delete((req, res)=> {
+    let fp = path.join(__dirname, './db/db.json');
+    let filteredNotes = fp.filter((note)=>{
+        return note.id !== req.params.id
+    })
+
+    fs.writeFile(fp, json.stringify(filteredNotes), (err)=>{
+        err ? console.error(err) : console.log('Note Deleted')
+    })
+    
+})
+
+// grabbing notes html so that it will appear when "get started" is clicked
+app.get('/notes', (req, res)=> res.sendFile(path.join(__dirname, './public/notes.html')));
+//app.get('/notes', (req, res)=> {res.send('Hello World')});
+
+// endpoints
+// grabbing the index.html so that it loads on page load
+app.get('/', (req, res)=> res.sendFile(path.join(__dirname,'./public/index.html')));
+
+
+
 
 
 
