@@ -2,6 +2,10 @@
 ## Description:
 This is a homework assignment that allows the user to create and save a note.
 
+![image](https://user-images.githubusercontent.com/95454993/158494239-8ab1de55-93a8-4fdf-acf9-491c9ee095ad.png)
+![image](https://user-images.githubusercontent.com/95454993/158494273-0b6fc698-bbbe-4807-8863-d87340d2942f.png)
+
+
 
 
 ## Table of Contents
