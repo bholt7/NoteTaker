@@ -4,11 +4,25 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bholt7/NoteTaker.git"
+  },
+  "keywords": [
+    "Heroku",
+    "application"
+  ],
+  "bugs": {
+    "url": "https://github.com/bholt7/NoteTaker/issues"
+  },
+  "homepage": "https://github.com/bholt7/NoteTaker#readme"
 }
